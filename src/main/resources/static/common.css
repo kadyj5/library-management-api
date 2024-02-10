@@ -54,7 +54,7 @@
     color: darkred;
 }
 
-#borrowButton {
+#borrowButton, #returnButton{
     font-size: 16px;
     margin: 5px;
     text-decoration: none;

@@ -11,5 +11,7 @@ public interface IClientDAO {
 
     List<Client> getAll();
 
+    public void delete(int id);
+
     void persist(Client client);
 }

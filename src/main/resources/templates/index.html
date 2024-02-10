@@ -19,6 +19,8 @@
         <div th:if="${!book.available}" th:text="${'Expected return date: ' + book.expectedDateOfReturn}"/>
         <a id="borrowButton"  class="button" th:if="${isLogged} and ${book.available}"
            th:href="@{/borrow/{id}(id=${book.id})}">Borrow</a>
+        <a id="returnButton" class="button" th:if="${isLogged} and ${!book.available}"
+           th:href="@{/return/{id}(id=${book.id})}">Return</a>
     </div>
 </div>
 </body>

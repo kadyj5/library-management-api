@@ -6,14 +6,15 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import pl.edu.wszib.library.management.api.dao.impl.IBorrowBookHistory;
+import org.springframework.stereotype.Repository;
+import pl.edu.wszib.library.management.api.dao.impl.IBorrowBookHistoryDAO;
 import pl.edu.wszib.library.management.api.model.BorrowBookHistory;
 
 import java.util.List;
 import java.util.Optional;
-
+@Repository
 @Component
-public class BorrowBookHistoryDAO implements IBorrowBookHistory {
+public class BorrowBookHistoryDAO implements IBorrowBookHistoryDAO {
     private final String GET_BY_ID = "FROM pl.edu.wszib.library.management.api.model.BorrowBookHistory WHERE id = :id";
     private final String GET_ALL = "FROM pl.edu.wszib.library.management.api.model.BorrowBookHistory";
 

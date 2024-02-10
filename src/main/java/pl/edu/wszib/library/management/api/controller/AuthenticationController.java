@@ -8,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import pl.edu.wszib.library.management.api.dao.impl.IUserDAO;
 import pl.edu.wszib.library.management.api.model.User;
 import pl.edu.wszib.library.management.api.service.IAuthenticationService;
 import pl.edu.wszib.library.management.api.session.SessionObject;
@@ -23,19 +22,23 @@ public class AuthenticationController {
     SessionObject sessionObject;
 
     @GetMapping(path = "/login")
-    public String login(Model model){
+    public String login(Model model) {
         model.addAttribute("userModel", new User());
         model.addAttribute("isLogged", sessionObject.isLogged());
-        log.info("Authentication for user.");
+        log.info("Authentication for user in progress...");
 
         return "login";
     }
+
     @PostMapping(path = "/login")
-    public String login(@ModelAttribute User user){
+    public String login(@ModelAttribute User user) {
         this.authenticationService.login(user.getLogin(), user.getPassword());
-        if(this.sessionObject.isLogged()) {
+        if (this.sessionObject.isLogged()) {
+            log.info("User authenticated with login: {}", user.getLogin());
+
             return "redirect:/main";
         }
+
         return "redirect:/login";
     }
 

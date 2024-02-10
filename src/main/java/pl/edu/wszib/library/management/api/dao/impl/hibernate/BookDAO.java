@@ -1,6 +1,7 @@
 package pl.edu.wszib.library.management.api.dao.impl.hibernate;
 
 import jakarta.persistence.NoResultException;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -11,10 +12,12 @@ import pl.edu.wszib.library.management.api.dao.impl.IBookDAO;
 import pl.edu.wszib.library.management.api.model.Book;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Repository
 @Component
+@Slf4j
 public class BookDAO implements IBookDAO {
     private final String GET_BY_ID = "FROM pl.edu.wszib.library.management.api.model.Book WHERE id = :id";
     private final String GET_ALL = "FROM pl.edu.wszib.library.management.api.model.Book";
@@ -70,11 +73,23 @@ public class BookDAO implements IBookDAO {
         Session session = this.sessionFactory.openSession();
         try {
             session.beginTransaction();
-            session.merge(book);
+            Book existingBook = session.get(Book.class, book.getId());
+            if (Objects.nonNull(existingBook)) {
+                existingBook.setAvailable(book.isAvailable());
+                existingBook.setDateOfBorrow(book.getDateOfBorrow());
+                existingBook.setExpectedDateOfReturn(book.getExpectedDateOfReturn());
+                existingBook.setAuthor(book.getAuthor());
+                existingBook.setTitle(book.getTitle());
+                existingBook.setIsbn(book.getIsbn());
+
+                log.info("Updating book with id {}.", book.getId());
+                session.merge(existingBook);
+            }
             session.getTransaction().commit();
         } catch (Exception e) {
             session.getTransaction().rollback();
         } finally {
+            log.info("Book updated id {}.", book.getId());
             session.close();
         }
     }

@@ -9,6 +9,7 @@
     <a href="/main" class="button">Main page</a>
     <a href="/login" class="button" th:if="${!isLogged}">Login</a>
     <a href="/logout" class="button" th:if="${isLogged}">Logout</a>
+    <a  href="/book/add" class="button" th:if="${isLogged}">Add book</a>
 </div>
 
 

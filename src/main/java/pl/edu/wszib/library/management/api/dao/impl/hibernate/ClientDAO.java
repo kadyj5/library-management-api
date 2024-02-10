@@ -5,12 +5,15 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import pl.edu.wszib.library.management.api.dao.impl.IClientDAO;
+import pl.edu.wszib.library.management.api.model.Book;
 import pl.edu.wszib.library.management.api.model.Client;
 
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 @Component
 public class ClientDAO implements IClientDAO {
     private final String GET_BY_ID = "FROM pl.edu.wszib.library.management.api.model.Client WHERE id = :id";
@@ -43,11 +46,25 @@ public class ClientDAO implements IClientDAO {
     }
 
     @Override
+    public void delete(int id) {
+        Session session = this.sessionFactory.openSession();
+        try {
+            session.beginTransaction();
+            session.remove(new Client(id));
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            session.getTransaction().rollback();
+        } finally {
+            session.close();
+        }
+    }
+
+    @Override
     public void persist(Client client) {
         Session session = this.sessionFactory.openSession();
         try {
             session.beginTransaction();
-            session.persist(client);
+            session.merge(client);
             session.getTransaction().commit();
         } catch (Exception e) {
             session.getTransaction().rollback();
