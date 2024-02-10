@@ -10,18 +10,15 @@ import pl.edu.wszib.library.management.api.common.UserAccessLevel;
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode
-@Entity(name = "tUser")
-public class User {
-
-    public User(String login, String password) {
-        this.login = login;
-        this.password = password;
-    }
+@Entity(name = "tClient")
+public class Client {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String login;
-    private String password;
 
+    private String name;
+    private String surname;
+    private int age;
+    private String phone;
 }

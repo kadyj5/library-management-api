@@ -5,22 +5,21 @@
     <title>Library Manager</title>
     <link rel="stylesheet" href="/common.css">
 </head>
-    <body>
-        <div id="logo">
-            <img src="/logo.png">
-        </div>
-        <div id="menu">
-            <a href="/main" class="button">Main page</a>
-        </div>
-        <div id="content">
-            <div class="book" th:each="book : ${books}">
-                <div th:text="${book.title}"/>
-                <div th:text="${book.author}"/>
-                <div th:text="${book.isbn}"/>
-                <div th:text="${'Available: ' + book.available}"/>
-                <div th:data="${'Borrow date: ' + book.dateOfBorrow}"/>
-                <div th:text="${'Return date: ' + book.expectedDateOfReturn}"/>
-            </div>
-        </div>
-    </body>
+<body>
+<div th:replace="~{templates.html :: logo}"></div>
+<div th:replace="~{templates.html :: menu}"></div>
+<div id="content">
+    <div class="book" th:each="book : ${books}">
+        <div th:text="${book.title}"/>
+        <div th:text="${book.author}"/>
+        <div th:text="${'ISBN: ' + book.isbn}"/>
+        <div id="borrowAvailable" th:if="${book.available}">Available</div>
+        <div id="borrowNotAvailable" th:if="${!book.available}">Borrowed</div>
+        <div th:if="${!book.available}" th:text="${'Borrow date: ' + book.dateOfBorrow}"/>
+        <div th:if="${!book.available}" th:text="${'Expected return date: ' + book.expectedDateOfReturn}"/>
+        <a id="borrowButton"  class="button" th:if="${isLogged} and ${book.available}"
+           th:href="@{/borrow/{id}(id=${book.id})}">Borrow</a>
+    </div>
+</div>
+</body>
 </html>

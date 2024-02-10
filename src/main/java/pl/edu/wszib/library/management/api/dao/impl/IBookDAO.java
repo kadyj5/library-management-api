@@ -7,8 +7,15 @@ import java.util.Optional;
 
 public interface IBookDAO {
     public Optional<Book> getById(int id);
+
     public List<Book> getAll();
+
     public void delete(int id);
+
     public void update(Book book);
+
     List<Book> getByPattern(String pattern);
+
+    void persist(Book bookw);
+
 }

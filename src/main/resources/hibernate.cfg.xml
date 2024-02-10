@@ -12,10 +12,11 @@
         <property name="hibernate.connection.password"></property>
 
         <property name="hibernate.show_sql">true</property>
-        <property name="hibernate.hbm2ddl.auto">create</property>
+        <property name="hibernate.hbm2ddl.auto">update</property>
 
         <mapping class="pl.edu.wszib.library.management.api.model.User"/>
         <mapping class="pl.edu.wszib.library.management.api.model.Book"/>
-        <mapping class="pl.edu.wszib.library.management.api.model.CheckOutHistory"/>
+        <mapping class="pl.edu.wszib.library.management.api.model.BorrowBookHistory"/>
+        <mapping class="pl.edu.wszib.library.management.api.model.Client"/>
     </session-factory>
 </hibernate-configuration>

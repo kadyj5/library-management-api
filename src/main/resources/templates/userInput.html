@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Borrow</title>
+    <link rel="stylesheet" href="/common.css">
+</head>
+<body>
+<div th:replace="~{templates.html :: logo}"></div>
+<div th:replace="~{templates.html :: menu}"></div>
+<div id="borrowBookForm">
+    <form method="post">
+        <input type="text" , placeholder="name" th:field="*{clientModel.name}">
+        <input type="text" , placeholder="surname" th:field="*{clientModel.surname}">
+        <input type="number" , placeholder="age" th:field="*{clientModel.age}">
+        <input type="text" , placeholder="phone" th:field="*{clientModel.phone}">
+        <input type="submit" , value="OK">
+    </form>
+</body>
+</html>

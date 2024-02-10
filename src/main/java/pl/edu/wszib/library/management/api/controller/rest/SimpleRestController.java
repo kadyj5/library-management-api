@@ -1,11 +1,10 @@
 package pl.edu.wszib.library.management.api.controller.rest;
 
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 import pl.edu.wszib.library.management.api.model.Book;
 import pl.edu.wszib.library.management.api.model.User;
-
-import java.util.Optional;
 
 @RestController
 public class SimpleRestController {

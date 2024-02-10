@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "tCheckOut")
-public class CheckOutHistory {
+public class BorrowBookHistory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,5 +20,8 @@ public class CheckOutHistory {
     private Book book;
     @ManyToOne
     private User user;
-    private LocalDateTime dateOfReturn;
+
+    public BorrowBookHistory(int id) {
+        this.id = id;
+    }
 }
