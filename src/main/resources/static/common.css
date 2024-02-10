@@ -1,0 +1,35 @@
+#logo {
+    width: 400px;
+    height: 400px;
+    margin: 15px auto;
+}
+
+#logo img {
+    width: 400px;
+    height: 400px;
+    margin: 0;
+    padding: 0;
+}
+
+#menu {
+    text-align: center;
+    border-top: 1px solid black;
+}
+
+.button {
+    font-size: 20px;
+    margin: 5px 25px;
+    text-decoration: none;
+    color: black;
+    border: 2px solid black;
+    padding: 5px 10px;
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 15px;
+}
+
+#content {
+    width: 70%;
+    margin: 20px auto;
+    text-align: center;
+}
