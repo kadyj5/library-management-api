@@ -47,7 +47,7 @@ public class BookDAO implements IBookDAO {
     }
 
     @Override
-    public List<Book> listAll() {
+    public List<Book> getAll() {
         Session session = this.sessionFactory.openSession();
         Query<Book> query = session.createQuery(GET_ALL, Book.class);
 

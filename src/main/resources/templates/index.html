@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Library Manager</title>
@@ -13,7 +13,14 @@
             <a href="/main" class="button">Main page</a>
         </div>
         <div id="content">
-            Books
+            <div class="book" th:each="book : ${books}">
+                <div th:text="${book.title}"/>
+                <div th:text="${book.author}"/>
+                <div th:text="${book.isbn}"/>
+                <div th:text="${'Available: ' + book.available}"/>
+                <div th:data="${'Borrow date: ' + book.dateOfBorrow}"/>
+                <div th:text="${'Return date: ' + book.expectedDateOfReturn}"/>
+            </div>
         </div>
     </body>
 </html>

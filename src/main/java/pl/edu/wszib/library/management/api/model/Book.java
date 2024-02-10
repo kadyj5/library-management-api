@@ -25,7 +25,7 @@ public class Book {
     private String author;
     private String isbn;
 
-    private boolean isRented;
+    private boolean available;
     private Date dateOfBorrow;
     private Date expectedDateOfReturn;
 
