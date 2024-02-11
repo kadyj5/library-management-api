@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add book</title>
+    <link rel="stylesheet" href="/common.css">
+</head>
+<body>
+<div th:replace="~{templates.html :: logo}"></div>
+<div th:replace="~{templates.html :: menu}"></div>
+<div id="content">
+    <form action="#" th:action="@{/main}" method="get">
+        <input type="text" name="searchPhrase" placeholder="Search for books..."/>
+        <button type="submit">Search</button>
+    </form>
+    <div class="book" th:each="borrowBookHistorie : ${borrowBookHistories}">
+        <div th:text="${borrowBookHistorie.getBook().getTitle()}"/>
+        <div th:text="${borrowBookHistorie.getBook().author}"/>
+        <div th:text="${'ISBN: ' + borrowBookHistorie.getBook().isbn}"/>
+        <div id="borrowAvailable" th:if="${borrowBookHistorie.getBook().available}">Available</div>
+        <div id="borrowNotAvailable" th:if="${!borrowBookHistorie.getBook().available}">Borrowed</div>
+        <div th:if="${!borrowBookHistorie.getBook().available}" th:text="${'Borrow date: ' + borrowBookHistorie.getBook().dateOfBorrow}"/>
+        <div th:if="${!borrowBookHistorie.getBook().available}" th:text="${'Expected return date: ' + borrowBookHistorie.getBook().expectedDateOfReturn}"/>
+        <div th:text="${'Client name: ' + borrowBookHistorie.getClient().name}"/>
+        <div th:text="${'Client surname: ' + borrowBookHistorie.getClient().surname}"/>
+        <div th:text="${'Client phone number: ' + borrowBookHistorie.getClient().phone}"/>
+    </div>
+</body>
+</html>

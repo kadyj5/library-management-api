@@ -7,9 +7,11 @@
 <body>
 <div id="menu" th:fragment="menu">
     <a href="/main" class="button">List books</a>
+    <a href="/main/rented" class="button" th:if="${isLogged}">List rented books</a>
+    <a href="/main/rented/delayed" class="button" th:if="${isLogged}">List books with past day of return</a>
     <a href="/login" class="button" th:if="${!isLogged}">Login</a>
     <a href="/logout" class="button" th:if="${isLogged}">Logout</a>
-    <a  href="/book/add" class="button" th:if="${isLogged}">Add book</a>
+    <a href="/book/add" class="button" th:if="${isLogged}">Add book</a>
 </div>
 <div id="logo" th:fragment="logo">
     <img src="/logo.png">

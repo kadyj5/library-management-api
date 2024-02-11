@@ -5,13 +5,17 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import pl.edu.wszib.library.management.api.model.Book;
+import pl.edu.wszib.library.management.api.model.BorrowBookHistory;
 import pl.edu.wszib.library.management.api.model.Client;
 import pl.edu.wszib.library.management.api.service.ILibraryService;
 import pl.edu.wszib.library.management.api.session.SessionObject;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -25,8 +29,8 @@ public class LibraryManagementApiController {
     SessionObject sessionObject;
 
     @GetMapping(path = {"/main"})
-    public String main(Model model,
-                       @RequestParam(value = "searchPhrase", required = false) String searchPhrase) {
+    public String listBooks(Model model,
+                            @RequestParam(value = "searchPhrase", required = false) String searchPhrase) {
 
         List<Book> books;
         if (Objects.nonNull(searchPhrase)) {
@@ -38,6 +42,29 @@ public class LibraryManagementApiController {
         model.addAttribute("isLogged", sessionObject.isLogged());
 
         return "index";
+    }
+
+    @GetMapping(path = {"/main/rented"})
+    public String listRentedBooks(Model model,
+                                  @RequestParam(value = "searchPhrase", required = false) String searchPhrase) {
+
+        List<BorrowBookHistory> borrowBookHistories = libraryService.getRentedBooks(searchPhrase);
+
+        model.addAttribute("borrowBookHistories", borrowBookHistories);
+        model.addAttribute("isLogged", sessionObject.isLogged());
+
+        return "notReturnedBooks";
+    }
+
+    @GetMapping(path = {"/main/rented/delayed"})
+    public String listDelayedBooks(Model model,
+                                   @RequestParam(value = "searchPhrase", required = false) String searchPhrase) {
+
+        List<BorrowBookHistory> borrowBookHistories = libraryService.getRentedBooksAfterDate(searchPhrase);
+        model.addAttribute("borrowBookHistories", borrowBookHistories);
+        model.addAttribute("isLogged", sessionObject.isLogged());
+
+        return "notReturnedBooks";
     }
 
     @GetMapping(path = "/borrow/{id}")

@@ -75,4 +75,25 @@ public class LibraryService implements ILibraryService {
         return bookDAO.getByPattern(pattern);
     }
 
+    @Override
+    public List<BorrowBookHistory> getRentedBooks(String searchPhrase) {
+        List<Book> matchingBooks = this.bookDAO.getByPattern(searchPhrase);
+
+        return borrowBookHistoryDAO.getAll().stream()
+                .filter(borrowHistory -> !borrowHistory.getBook().isAvailable())
+                .filter(borrowHistory -> matchingBooks.contains(borrowHistory.getBook()))
+                .toList();
+    }
+
+    @Override
+    public List<BorrowBookHistory> getRentedBooksAfterDate(String searchPhrase) {
+        List<Book> matchingBooks = this.bookDAO.getByPattern(searchPhrase);
+
+        return borrowBookHistoryDAO.getAll().stream()
+                .filter(borrowHistory -> !borrowHistory.getBook().isAvailable())
+                .filter(borrowHistory -> borrowHistory.getBook().getExpectedDateOfReturn().before(Calendar.getInstance().getTime()))
+                .filter(borrowHistory -> matchingBooks.contains(borrowHistory.getBook()))
+                .toList();
+    }
+
 }
