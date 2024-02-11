@@ -9,6 +9,10 @@
 <div th:replace="~{templates.html :: logo}"></div>
 <div th:replace="~{templates.html :: menu}"></div>
 <div id="content">
+    <form action="#" th:action="@{/main}" method="get">
+        <input type="text" name="searchPhrase" placeholder="Search for books..." />
+        <button type="submit">Search</button>
+    </form>
     <div class="book" th:each="book : ${books}">
         <div th:text="${book.title}"/>
         <div th:text="${book.author}"/>
@@ -17,11 +21,16 @@
         <div id="borrowNotAvailable" th:if="${!book.available}">Borrowed</div>
         <div th:if="${!book.available}" th:text="${'Borrow date: ' + book.dateOfBorrow}"/>
         <div th:if="${!book.available}" th:text="${'Expected return date: ' + book.expectedDateOfReturn}"/>
+
         <a id="borrowButton"  class="button" th:if="${isLogged} and ${book.available}"
            th:href="@{/borrow/{id}(id=${book.id})}">Borrow</a>
         <a id="returnButton" class="button" th:if="${isLogged} and ${!book.available}"
            th:href="@{/return/{id}(id=${book.id})}">Return</a>
     </div>
+
+<!--    <div th:if="${books.empty}">-->
+<!--        <p>Nie znaleziono książek.</p>-->
+<!--    </div>-->
 </div>
 </body>
 </html>

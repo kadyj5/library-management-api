@@ -49,13 +49,11 @@ public class LibraryService implements ILibraryService {
     @Override
     public void returnBook(int id) {
         Optional<Book> bookBox = this.bookDAO.getById(id);
-
         bookBox.get().setDateOfBorrow(null);
         bookBox.get().setExpectedDateOfReturn(null);
         bookBox.get().setAvailable(true);
+
         bookDAO.update(bookBox.get());
-
-
     }
 
     @Override
@@ -67,12 +65,14 @@ public class LibraryService implements ILibraryService {
     }
 
     @Override
-    public void removeBook(int id) {
-        bookDAO.delete(id);
-    }
-
-    @Override
     public List<Book> getAll() {
         return this.bookDAO.getAll();
     }
+
+    @Override
+    public List<Book> searchByPhrase(String pattern) {
+
+        return bookDAO.getByPattern(pattern);
+    }
+
 }

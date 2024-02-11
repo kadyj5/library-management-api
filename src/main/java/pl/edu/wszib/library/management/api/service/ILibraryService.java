@@ -6,13 +6,13 @@ import pl.edu.wszib.library.management.api.model.Client;
 import java.util.List;
 
 public interface ILibraryService {
-    void borrowBook(int id , Client client);
+    void borrowBook(int id, Client client);
 
     void returnBook(int id);
 
     void addBook(Book book);
-    void removeBook(int id);
 
     List<Book> getAll();
 
+    List<Book> searchByPhrase(String pattern);
 }

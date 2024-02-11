@@ -5,17 +5,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import pl.edu.wszib.library.management.api.model.Book;
 import pl.edu.wszib.library.management.api.model.Client;
-import pl.edu.wszib.library.management.api.model.User;
 import pl.edu.wszib.library.management.api.service.ILibraryService;
 import pl.edu.wszib.library.management.api.session.SessionObject;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @Slf4j
@@ -26,16 +24,23 @@ public class LibraryManagementApiController {
     @Resource
     SessionObject sessionObject;
 
-    @RequestMapping(path = {"/", "/main", "/index"}, method = RequestMethod.GET)
-    public String main(Model model) {
-        List<Book> books = libraryService.getAll();
+    @GetMapping(path = {"/main"})
+    public String main(Model model,
+                       @RequestParam(value = "searchPhrase", required = false) String searchPhrase) {
+
+        List<Book> books;
+        if (Objects.nonNull(searchPhrase)) {
+            books = libraryService.searchByPhrase(searchPhrase);
+        } else {
+            books = libraryService.getAll();
+        }
         model.addAttribute("books", books);
         model.addAttribute("isLogged", sessionObject.isLogged());
 
         return "index";
     }
 
-    @RequestMapping(path = "/borrow/{id}", method = RequestMethod.GET)
+    @GetMapping(path = "/borrow/{id}")
     public String borrow(@PathVariable int id, Model model) {
         model.addAttribute("clientModel", new Client());
         model.addAttribute("isLogged", sessionObject.isLogged());
@@ -44,7 +49,7 @@ public class LibraryManagementApiController {
         return "userInput";
     }
 
-    @RequestMapping(path = "/borrow/{id}", method = RequestMethod.POST)
+    @PostMapping(path = "/borrow/{id}")
     public String borrow(@PathVariable int id,
                          @ModelAttribute Client client) {
 
@@ -53,7 +58,7 @@ public class LibraryManagementApiController {
         return "redirect:/main";
     }
 
-    @RequestMapping(path = "/return/{id}", method = RequestMethod.GET)
+    @GetMapping(path = "/return/{id}")
     public String returnBook(@PathVariable int id) {
 
         log.info("Returning book with id {}. ", id);
@@ -61,7 +66,7 @@ public class LibraryManagementApiController {
         return "redirect:/main";
     }
 
-    @RequestMapping(path = "/book/add", method = RequestMethod.GET)
+    @GetMapping(path = "/book/add")
     public String returnBook(Model model) {
         model.addAttribute("bookModel", new Book());
         model.addAttribute("isLogged", sessionObject.isLogged());
@@ -70,7 +75,7 @@ public class LibraryManagementApiController {
         return "bookAdd";
     }
 
-    @RequestMapping(path = "/book/add", method = RequestMethod.POST)
+    @PostMapping(path = "/book/add")
     public String returnBook(@ModelAttribute Book book) {
         libraryService.addBook(book);
 
