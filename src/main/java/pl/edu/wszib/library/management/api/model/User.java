@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.ToString;
 
 @Builder
@@ -18,6 +19,7 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 @Entity(name = "tUser")
+@NonNull
 public class User {
 
     public User(String login, String password) {

@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 import java.util.Date;
 
@@ -19,12 +20,17 @@ import java.util.Date;
 public class Book {
 
     @Id
+    @NonNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String title;
-    private String author;
-    private String isbn;
+    @NonNull
+    @Builder.Default private String title = "N/A";
+    @NonNull
+    @Builder.Default private String author = "N/A";
+    @NonNull
+    @Builder.Default private String isbn = "N/A";
 
+    @NonNull
     private boolean available;
     private Date dateOfBorrow;
     private Date expectedDateOfReturn;

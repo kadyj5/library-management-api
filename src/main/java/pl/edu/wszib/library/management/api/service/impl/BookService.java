@@ -9,7 +9,7 @@ import pl.edu.wszib.library.management.api.dao.impl.IClientDAO;
 import pl.edu.wszib.library.management.api.model.Book;
 import pl.edu.wszib.library.management.api.model.BorrowBookHistory;
 import pl.edu.wszib.library.management.api.model.Client;
-import pl.edu.wszib.library.management.api.service.ILibraryService;
+import pl.edu.wszib.library.management.api.service.IBookService;
 import pl.edu.wszib.library.management.api.session.SessionObject;
 
 import java.util.Calendar;
@@ -18,7 +18,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Component
-public class LibraryService implements ILibraryService {
+public class BookService implements IBookService {
     @Autowired
     IBookDAO bookDAO;
     @Autowired
@@ -67,7 +67,14 @@ public class LibraryService implements ILibraryService {
         book.setAvailable(true);
         book.setExpectedDateOfReturn(null);
         book.setDateOfBorrow(null);
-        bookDAO.persist(book);
+        bookDAO.persist(Book.builder()
+                .title(book.getTitle())
+                .author(book.getAuthor())
+                .isbn(book.getIsbn())
+                .available(true)
+                .expectedDateOfReturn(null)
+                .dateOfBorrow(null)
+                .build());
     }
 
     @Override

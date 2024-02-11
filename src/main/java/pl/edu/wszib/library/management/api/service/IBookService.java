@@ -6,7 +6,7 @@ import pl.edu.wszib.library.management.api.model.Client;
 
 import java.util.List;
 
-public interface ILibraryService {
+public interface IBookService {
     void borrowBook(int id, Client client);
 
     void returnBook(int id);

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import pl.edu.wszib.library.management.api.model.Book;
 import pl.edu.wszib.library.management.api.model.BorrowBookHistory;
 import pl.edu.wszib.library.management.api.model.Client;
-import pl.edu.wszib.library.management.api.service.ILibraryService;
+import pl.edu.wszib.library.management.api.service.IBookService;
 import pl.edu.wszib.library.management.api.session.SessionObject;
 
 import java.util.List;
@@ -24,7 +24,7 @@ import java.util.Objects;
 public class LibraryManagementApiController {
 
     @Autowired
-    ILibraryService libraryService;
+    IBookService libraryService;
     @Resource
     SessionObject sessionObject;
 
