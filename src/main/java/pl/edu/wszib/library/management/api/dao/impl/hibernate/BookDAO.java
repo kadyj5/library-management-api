@@ -21,7 +21,7 @@ import java.util.Optional;
 public class BookDAO implements IBookDAO {
     private final String GET_BY_ID = "FROM pl.edu.wszib.library.management.api.model.Book WHERE id = :id";
     private final String GET_ALL = "FROM pl.edu.wszib.library.management.api.model.Book";
-    private final String GET_BY_PATTERN = "FROM pl.edu.wszib.library.management.api.model.Book WHERE author LIKE :pattern OR title LIKE :pattern";
+    private final String GET_BY_PATTERN = "FROM pl.edu.wszib.library.management.api.model.Book WHERE author LIKE :pattern OR title LIKE :pattern OR isbn LIKE :pattern";
 
     @Autowired
     SessionFactory sessionFactory;
@@ -118,5 +118,4 @@ public class BookDAO implements IBookDAO {
             session.close();
         }
     }
-
 }

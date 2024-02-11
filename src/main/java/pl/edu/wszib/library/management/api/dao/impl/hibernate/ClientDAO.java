@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import pl.edu.wszib.library.management.api.dao.impl.IClientDAO;
-import pl.edu.wszib.library.management.api.model.Book;
 import pl.edu.wszib.library.management.api.model.Client;
 
 import java.util.List;

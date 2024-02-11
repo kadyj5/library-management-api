@@ -47,5 +47,4 @@ public class AuthenticationController {
         this.authenticationService.logout();
         return "redirect:/main";
     }
-
 }

@@ -14,6 +14,7 @@ import pl.edu.wszib.library.management.api.session.SessionObject;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Component
@@ -54,6 +55,11 @@ public class LibraryService implements ILibraryService {
         bookBox.get().setAvailable(true);
 
         bookDAO.update(bookBox.get());
+        borrowBookHistoryDAO.delete(borrowBookHistoryDAO.getAll().stream()
+                .filter(borrowBookHistory -> (borrowBookHistory.getBook().getId() == id))
+                .findFirst()
+                .get()
+                .getId());
     }
 
     @Override
@@ -77,7 +83,13 @@ public class LibraryService implements ILibraryService {
 
     @Override
     public List<BorrowBookHistory> getRentedBooks(String searchPhrase) {
-        List<Book> matchingBooks = this.bookDAO.getByPattern(searchPhrase);
+        List<Book> matchingBooks;
+
+        if (Objects.nonNull(searchPhrase)) {
+            matchingBooks = this.bookDAO.getByPattern(searchPhrase);
+        } else {
+            matchingBooks = this.bookDAO.getAll();
+        }
 
         return borrowBookHistoryDAO.getAll().stream()
                 .filter(borrowHistory -> !borrowHistory.getBook().isAvailable())
@@ -87,7 +99,13 @@ public class LibraryService implements ILibraryService {
 
     @Override
     public List<BorrowBookHistory> getRentedBooksAfterDate(String searchPhrase) {
-        List<Book> matchingBooks = this.bookDAO.getByPattern(searchPhrase);
+        List<Book> matchingBooks;
+
+        if (Objects.nonNull(searchPhrase)) {
+            matchingBooks = this.bookDAO.getByPattern(searchPhrase);
+        } else {
+            matchingBooks = this.bookDAO.getAll();
+        }
 
         return borrowBookHistoryDAO.getAll().stream()
                 .filter(borrowHistory -> !borrowHistory.getBook().isAvailable())
@@ -95,5 +113,4 @@ public class LibraryService implements ILibraryService {
                 .filter(borrowHistory -> matchingBooks.contains(borrowHistory.getBook()))
                 .toList();
     }
-
 }

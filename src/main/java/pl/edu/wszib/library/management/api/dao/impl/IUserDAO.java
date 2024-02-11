@@ -13,5 +13,4 @@ public interface IUserDAO {
     List<User> getAll();
 
     void persist(User user);
-
 }

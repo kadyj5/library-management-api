@@ -12,6 +12,7 @@ import pl.edu.wszib.library.management.api.model.BorrowBookHistory;
 
 import java.util.List;
 import java.util.Optional;
+
 @Repository
 @Component
 public class BorrowBookHistoryDAO implements IBorrowBookHistoryDAO {
@@ -82,7 +83,7 @@ public class BorrowBookHistoryDAO implements IBorrowBookHistoryDAO {
         Session session = this.sessionFactory.openSession();
         try {
             session.beginTransaction();
-            session.persist(borrowBookHistory);
+            session.merge(borrowBookHistory);
             session.getTransaction().commit();
         } catch (Exception e) {
             session.getTransaction().rollback();
