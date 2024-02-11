@@ -1,7 +1,10 @@
 package pl.edu.wszib.library.management.api.service.impl;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 import pl.edu.wszib.library.management.api.dao.impl.IBookDAO;
 import pl.edu.wszib.library.management.api.dao.impl.IBorrowBookHistoryDAO;
@@ -25,6 +28,8 @@ public class BookService implements IBookService {
     IBorrowBookHistoryDAO borrowBookHistoryDAO;
     @Autowired
     IClientDAO clientDAO;
+    @Autowired
+    ObjectMapper objectMapper;
     @Resource
     SessionObject sessionObject;
 
@@ -119,5 +124,14 @@ public class BookService implements IBookService {
                 .filter(borrowHistory -> borrowHistory.getBook().getExpectedDateOfReturn().before(Calendar.getInstance().getTime()))
                 .filter(borrowHistory -> matchingBooks.contains(borrowHistory.getBook()))
                 .toList();
+    }
+
+    @Override
+    public List<Book> defaultInitialize() throws Exception {
+        ClassPathResource resource = new ClassPathResource("jsons/books.json");
+        List<Book> books = objectMapper.readValue(resource.getInputStream(), new TypeReference<List<Book>>() {
+        });
+        books.forEach(this::addBook);
+        return books;
     }
 }

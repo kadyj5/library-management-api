@@ -20,4 +20,6 @@ public interface IBookService {
     List<BorrowBookHistory> getRentedBooks(String searchPhrase);
 
     List<BorrowBookHistory> getRentedBooksAfterDate(String searchPhrase);
+
+    List<Book> defaultInitialize() throws Exception;
 }

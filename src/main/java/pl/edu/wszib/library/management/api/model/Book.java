@@ -24,11 +24,11 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @NonNull
-    @Builder.Default private String title = "N/A";
+    private String title;
     @NonNull
-    @Builder.Default private String author = "N/A";
+    private String author;
     @NonNull
-    @Builder.Default private String isbn = "N/A";
+    private String isbn;
 
     @NonNull
     private boolean available;

@@ -1,7 +1,10 @@
 package pl.edu.wszib.library.management.api.service.impl;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 import pl.edu.wszib.library.management.api.dao.impl.hibernate.UserDAO;
 import pl.edu.wszib.library.management.api.model.User;
@@ -14,6 +17,8 @@ public class UserService implements IUserService {
 
     @Autowired
     UserDAO userDAO;
+    @Autowired
+    ObjectMapper objectMapper;
 
     @Override
     public List<User> getAll() {
@@ -25,5 +30,14 @@ public class UserService implements IUserService {
 
         userDAO.persist(User.builder().login(user.getLogin())
                 .password(DigestUtils.md5Hex(user.getPassword())).build());
+    }
+
+    @Override
+    public List<User> defaultInitialize() throws Exception {
+        ClassPathResource resource = new ClassPathResource("jsons/users.json");
+        List<User> users = objectMapper.readValue(resource.getInputStream(), new TypeReference<List<User>>() {
+        });
+        users.forEach(this::addUser);
+        return users;
     }
 }

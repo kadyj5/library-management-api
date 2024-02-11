@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.edu.wszib.library.management.api.model.Book;
+import pl.edu.wszib.library.management.api.model.User;
 import pl.edu.wszib.library.management.api.service.impl.BookService;
 
 import java.util.List;
@@ -33,5 +34,9 @@ public class BookInitializationController {
     @GetMapping(path = "/init")
     public ResponseEntity<List<Book>> initialize() {
         return ResponseEntity.status(HttpStatus.OK).body((bookService.getAll()));
+    }
+    @PostMapping(path = "/default")
+    public ResponseEntity<List<Book>> defaultMethod() throws Exception {
+        return ResponseEntity.status(HttpStatus.CREATED).body(bookService.defaultInitialize());
     }
 }
